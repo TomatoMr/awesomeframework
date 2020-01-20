@@ -19,9 +19,16 @@ type DBConfig struct {
 	DbName     string `json:"db_name"`
 }
 
+type RedisConfig struct {
+	Addr     string `json:"addr"`
+	Password string `json:"password"`
+	DB       int    `json:"db"`
+}
+
 type Config struct {
-	LogConfig LogConfig `json:"log_config"`
-	DBConfig  DBConfig  `json:"db_config"`
+	LogConfig   LogConfig   `json:"log_config"`
+	DBConfig    DBConfig    `json:"db_config"`
+	RedisConfig RedisConfig `json:"redis_config"`
 }
 
 var conf Config

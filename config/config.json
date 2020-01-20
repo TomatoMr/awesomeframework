@@ -9,5 +9,10 @@
     "db_user": "root",
     "db_password": "123456",
     "db_name": "test"
+  },
+  "redis_config": {
+    "addr": "127.0.0.1:6379",
+    "password": "",
+    "db": 0
   }
 }
