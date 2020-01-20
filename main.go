@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/TomatoMr/awesomeframework/config"
+	"github.com/TomatoMr/awesomeframework/db"
 	"github.com/TomatoMr/awesomeframework/logger"
 	"os"
 )
@@ -30,6 +31,12 @@ func main() {
 	err = logger.InitLogger(logConfig.LogPath, logConfig.LogLevel)
 	if err != nil {
 		fmt.Printf("Init logger failed. Error is %v", err)
+		os.Exit(1)
+	}
+
+	err = db.InitEngine()
+	if err != nil {
+		fmt.Printf("Init DB failed. Error is %v", err)
 		os.Exit(1)
 	}
 
