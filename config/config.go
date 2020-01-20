@@ -11,8 +11,17 @@ type LogConfig struct {
 	LogLevel string `json:"log_level"`
 }
 
+type DBConfig struct {
+	DbHost     string `json:"db_host"`
+	DbPort     string `json:"db_port"`
+	DbUser     string `json:"db_user"`
+	DbPassword string `json:"db_password"`
+	DbName     string `json:"db_name"`
+}
+
 type Config struct {
 	LogConfig LogConfig `json:"log_config"`
+	DBConfig  DBConfig  `json:"db_config"`
 }
 
 var conf Config
