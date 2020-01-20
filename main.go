@@ -6,6 +6,7 @@ import (
 	"github.com/TomatoMr/awesomeframework/config"
 	"github.com/TomatoMr/awesomeframework/db"
 	"github.com/TomatoMr/awesomeframework/logger"
+	"github.com/TomatoMr/awesomeframework/redis"
 	"os"
 )
 
@@ -37,6 +38,12 @@ func main() {
 	err = db.InitEngine()
 	if err != nil {
 		fmt.Printf("Init DB failed. Error is %v", err)
+		os.Exit(1)
+	}
+
+	err = redis.InitRedis()
+	if err != nil {
+		fmt.Printf("Init Redis failed. Error is %v", err)
 		os.Exit(1)
 	}
 
