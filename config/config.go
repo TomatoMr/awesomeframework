@@ -25,10 +25,20 @@ type RedisConfig struct {
 	DB       int    `json:"db"`
 }
 
+type HttpConfig struct {
+	Addr string `json:"addr"`
+}
+
+type RpcConfig struct {
+	Addr string `json:"addr"`
+}
+
 type Config struct {
 	LogConfig   LogConfig   `json:"log_config"`
 	DBConfig    DBConfig    `json:"db_config"`
 	RedisConfig RedisConfig `json:"redis_config"`
+	HttpConfig  HttpConfig  `json:"http_config"`
+	RpcConfig   RedisConfig `json:"rpc_config"`
 }
 
 var conf Config
