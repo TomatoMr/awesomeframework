@@ -1,0 +1,20 @@
+syntax = "proto3"; //语法声明
+
+package server; //包名
+
+service Server {
+    rpc GetServerTime (ServerTimeRequest) returns (ServerTimeResponse);
+}
+
+message ServerTimeRequest {
+}
+
+message ServerTimeResponse {
+    uint32 code = 1;
+    string msg = 2;
+    ServerTimeResponseData data = 3;
+}
+
+message ServerTimeResponseData {
+    uint64 server_time = 1;
+}
