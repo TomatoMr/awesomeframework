@@ -6,6 +6,8 @@ import (
 	"github.com/TomatoMr/awesomeframework/config"
 	"github.com/TomatoMr/awesomeframework/db"
 	"github.com/TomatoMr/awesomeframework/logger"
+	"github.com/TomatoMr/awesomeframework/process/http"
+	"github.com/TomatoMr/awesomeframework/process/rpc"
 	"github.com/TomatoMr/awesomeframework/redis"
 	"os"
 )
@@ -47,5 +49,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	//启动http服务
+	go http.StartHttpServer(config.GetConfig().HttpConfig.Addr)
+
+	//启动rpc服务
+	go rpc.StartRpcServer(config.GetConfig().RpcConfig.Addr)
+
 	logger.GetLogger().Info("Init success.")
+
+	select {}
 }
