@@ -1,0 +1,17 @@
+"log_config":
+  "log_path": "./tmp/log"
+  "log_level": "debug"
+"db_config":
+  "db_host": "127.0.0.1"
+  "db_port": "3306"
+  "db_user": "root"
+  "db_password": "123456"
+  "db_name": "test"
+"redis_config":
+  "addr": "127.0.0.1:6379"
+  "password": ""
+  "db": 0
+"http_config":
+  "addr": ":8080"
+"rpc_config":
+  "addr": ":8081"
