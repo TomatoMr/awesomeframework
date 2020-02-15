@@ -34,5 +34,7 @@ func timeWriter(conn *websocket.Conn) {
 	for {
 		time.Sleep(time.Second * 2)
 		conn.WriteMessage(websocket.TextMessage, []byte(time.Now().Format("2006-01-02 15:04:05")))
+		conn.WriteMessage(websocket.TextMessage, []byte("ping"))
+		conn.WriteMessage(websocket.TextMessage, []byte("server_time"))
 	}
 }

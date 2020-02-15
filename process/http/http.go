@@ -25,30 +25,6 @@ func StartHttpServer(addr string) {
 	}
 }
 
-//webSocket请求ping 返回pong
-func Ws(ctx *gin.Context) {
-	ws, err := upGrader.Upgrade(ctx.Writer, ctx.Request, nil)
-	if err != nil {
-		return
-	}
-	defer ws.Close()
-	for {
-		//读取数据
-		mt, message, err := ws.ReadMessage()
-		if err != nil {
-			break
-		}
-		if string(message) == "ping" {
-			message = []byte("pong")
-		}
-		//写入数据
-		err = ws.WriteMessage(mt, message)
-		if err != nil {
-			break
-		}
-	}
-}
-
 func Route() {
 	engine.GET("/server_time", GetServerTime)
 	engine.GET("/ws", Ws)
