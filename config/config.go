@@ -33,12 +33,19 @@ type RpcConfig struct {
 	Addr string `yaml:"addr"`
 }
 
+type NsqConfig struct {
+	Topic          string `yaml:"topic"`
+	Channel        string `yaml:"channel"`
+	NsqLookupdAddr string `yaml:"nsqlookupd_addr"`
+}
+
 type Config struct {
 	LogConfig   LogConfig   `yaml:"log_config"`
 	DBConfig    DBConfig    `yaml:"db_config"`
 	RedisConfig RedisConfig `yaml:"redis_config"`
 	HttpConfig  HttpConfig  `yaml:"http_config"`
 	RpcConfig   RedisConfig `yaml:"rpc_config"`
+	NsqConfig   NsqConfig   `yaml:"nsq_config"`
 }
 
 var conf Config

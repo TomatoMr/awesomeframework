@@ -15,3 +15,7 @@
   "addr": ":8080"
 "rpc_config":
   "addr": ":8081"
+"nsq_config":
+  "topic": "awesome"
+  "channel": "ch"
+  "nsqlookupd_addr": "127.0.0.1:4161"

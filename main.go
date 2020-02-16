@@ -6,6 +6,7 @@ import (
 	"github.com/TomatoMr/awesomeframework/config"
 	"github.com/TomatoMr/awesomeframework/db"
 	"github.com/TomatoMr/awesomeframework/logger"
+	"github.com/TomatoMr/awesomeframework/mq"
 	"github.com/TomatoMr/awesomeframework/process/http"
 	"github.com/TomatoMr/awesomeframework/process/rpc"
 	"github.com/TomatoMr/awesomeframework/redis"
@@ -54,6 +55,9 @@ func main() {
 
 	//启动rpc服务
 	go rpc.StartRpcServer(config.GetConfig().RpcConfig.Addr)
+
+	//启动nsq消费者
+	go mq.StartMqServer()
 
 	logger.GetLogger().Info("Init success.")
 
