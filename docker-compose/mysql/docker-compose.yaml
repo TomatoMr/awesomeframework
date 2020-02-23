@@ -1,0 +1,16 @@
+version: '3'
+services:
+    db:
+        image: mysql
+        container_name: mysql-db # 容器名
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_USER: tomato
+          MYSQL_PASSWORD: 123456
+        ports:
+          - '6606:3306'
+        volumes:
+          - "./db:/var/lib/mysql"  
+            # - "./conf:/etc/mysql/conf.d"
