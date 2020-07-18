@@ -1,16 +1,21 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
+	"github.com/TomatoMr/awesomeframework/admin"
 	"github.com/TomatoMr/awesomeframework/config"
 	"github.com/TomatoMr/awesomeframework/db"
 	"github.com/TomatoMr/awesomeframework/logger"
 	"github.com/TomatoMr/awesomeframework/mq"
-	"github.com/TomatoMr/awesomeframework/process/http"
+	httpsrv "github.com/TomatoMr/awesomeframework/process/http"
 	"github.com/TomatoMr/awesomeframework/process/rpc"
 	"github.com/TomatoMr/awesomeframework/redis"
+	"net/http"
+	"net/http/pprof"
 	"os"
+	"time"
 )
 
 func main() {
@@ -51,7 +56,7 @@ func main() {
 	}
 
 	//启动http服务
-	go http.StartHttpServer(config.GetConfig().HttpConfig.Addr)
+	go httpsrv.StartHttpServer(config.GetConfig().HttpConfig.Addr)
 
 	//启动rpc服务
 	go rpc.StartRpcServer(config.GetConfig().RpcConfig.Addr)
@@ -61,5 +66,28 @@ func main() {
 
 	logger.GetLogger().Info("Init success.")
 
-	select {}
+	pCh := admin.Get()
+	for {
+		select {
+		case <-pCh.OnOff:
+			timeout := time.Second * time.Duration(pCh.Timeout)
+			go func() {
+				mux := http.NewServeMux()
+				mux.Handle("/debug/pprof/", http.HandlerFunc(pprof.Index))
+				mux.Handle("/debug/pprof/cmdline", http.HandlerFunc(pprof.Cmdline))
+				mux.Handle("/debug/pprof/profile", http.HandlerFunc(pprof.Profile))
+				mux.Handle("/debug/pprof/symbol", http.HandlerFunc(pprof.Symbol))
+				mux.Handle("/debug/pprof/trace", http.HandlerFunc(pprof.Trace))
+				s := &http.Server{Addr: pCh.Host, Handler: mux}
+				logger.GetLogger().Info("start serve pprof")
+				go s.ListenAndServe()
+				time.Sleep(timeout)
+				s.Shutdown(context.Background())
+				<-pCh.Used
+				logger.GetLogger().Info("stop serve pprof")
+			}()
+			pCh.Used <- struct{}{}
+			logger.GetLogger().Info("fuck")
+		}
+	}
 }

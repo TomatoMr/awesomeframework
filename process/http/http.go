@@ -27,5 +27,6 @@ func StartHttpServer(addr string) {
 
 func Route() {
 	engine.GET("/server_time", GetServerTime)
+	engine.GET("/serve_pprof", ServePprof)
 	engine.GET("/ws", Ws)
 }
